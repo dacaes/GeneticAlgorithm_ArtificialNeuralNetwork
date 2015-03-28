@@ -16,13 +16,12 @@ public class Genotype
 		{
 			double num = rand.nextDouble() * (1 - 0) + 0;
 
+			//System.out.println("" + num);
 			if(num < 0.5)
 				genotype[i] = 0;
 			else
 				genotype[i] = 1;
 		};
-
-		System.out.println("zz");
 		/*
 		//i8 h4 o4
 		//direct disconnected

@@ -25,46 +25,47 @@ public class Main
 	
 	private static byte[] SetGenotype()
 	{
-		byte[] genotype = new byte[4];
+		byte[] genotype = new byte[18];
+		
 		for (int i = 0; i < 4; i++) {
 			genotype[i] = (byte) 1;
 		}
 		
 		//i3 h2 o2
+		
+		genotype[0] = (byte) 1;
+		genotype[1] = (byte) 0;
+		genotype[2] = (byte) 1;
+		genotype[3] = (byte) 0;
+		genotype[4] = (byte) 0;
+		genotype[5] = (byte) 1;
+		
+		genotype[6] = (byte) 1;
+		genotype[7] = (byte) 0;
+		genotype[8] = (byte) 0;
+		genotype[9] = (byte) 1;
+		genotype[10] = (byte) 0;
+		genotype[11] = (byte) 0;
+		
+		genotype[12] = (byte) 0;
+		genotype[13] = (byte) 0;
+		genotype[14] = (byte) 1;
+		genotype[15] = (byte) 0;
+		genotype[16] = (byte) 0;
+		genotype[17] = (byte) 1;
+		
 		/*
-		genotype.add((byte) 1);
-		genotype.add((byte) 0);
-		genotype.add((byte) 1);
-		genotype.add((byte) 0);
-		genotype.add((byte) 0);
-		genotype.add((byte) 1);
+		genotype[0] = (byte) 1;
+		genotype[1] = (byte) 0;
+		genotype[2] = (byte) 1;
 		
-		genotype.add((byte) 1);
-		genotype.add((byte) 0);
-		genotype.add((byte) 0);
-		genotype.add((byte) 1);
-		genotype.add((byte) 0);
-		genotype.add((byte) 0);
+		genotype[3] = (byte) 1;
+		genotype[4] = (byte) 1;
+		genotype[5] = (byte) 0;
 		
-		genotype.add((byte) 0);
-		genotype.add((byte) 0);
-		genotype.add((byte) 1);
-		genotype.add((byte) 0);
-		genotype.add((byte) 0);
-		genotype.add((byte) 1);
-		*/
-		/*
-		genotype.add((byte) 1);
-		genotype.add((byte) 0);
-		genotype.add((byte) 1);
-		
-		genotype.add((byte) 1);
-		genotype.add((byte) 1);
-		genotype.add((byte) 0);
-		
-		genotype.add((byte) 0);
-		genotype.add((byte) 1);
-		genotype.add((byte) 1);
+		genotype[6] = (byte) 0;
+		genotype[7] = (byte) 1;
+		genotype[8] = (byte) 1;
 		*/
 		return genotype;
 	}
