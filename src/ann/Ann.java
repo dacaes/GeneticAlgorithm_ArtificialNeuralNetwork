@@ -50,57 +50,51 @@ public class Ann
 	}
 	
 	private void WeightMapping(byte[] genotype, final int gen_size, final int blocks_length,final int inputs, final int hidden, final int outputs)
-	{
+	{	
 		for (int i = 0; i < gen_size; i++)
 		{
 			Byte val = genotype[i];
 			
-			//input ->  output connections mapping
-			if(i < blocks_length)
+			int input_index = 0;
+			int output_index = i;
+			int hidden_index = -1;
+			
+			int h_threshold = i;
+			
+			while(h_threshold >= blocks_length)
 			{
-				int input = 0;
-				int substraction = i;
-				
-				while(substraction >= outputs)
-				{
-					input++;
-					substraction -= outputs;
-				}				
-				
-				mapping_I_O[input][substraction] = val;
+				hidden_index++;
+				h_threshold -= blocks_length;
 			}
-				
-			//hidden connections mapping
-			else 
+			
+			while(output_index >= outputs)
 			{
-				int hidden_neuron = 0;
-				int input_index = 0;
-				int substraction = i - blocks_length;
-				int substraction_i = i - blocks_length;
-				
-				while(substraction >= blocks_length)
-				{
-					hidden_neuron++;
-					substraction -= blocks_length;
-				}				
-				
-				/////
-				while(substraction_i >= outputs)
-				{
-					input_index++;
-					substraction_i -= outputs;
-				}
-				int output_index;
-
-				output_index = substraction % (outputs);
-				
+				input_index++;
+				output_index -= outputs;
+			}
+			
+			while(input_index >= inputs)
+			{
+				input_index -= inputs;
+			}	
+			
+			if(i < blocks_length )
+			{
+				//System.out.println("I___ " + input_index + "    O___ " + output_index);
+				//input ->  output connections mapping
+				mapping_I_O[input_index][output_index] = val;
+			}
+			
+			if(i >= blocks_length )
+			{
+				//System.out.println("I___ " + input_index + "    H___ " + hidden_index + "    O___ " + output_index);
 				//input ->  hidden connections mapping
-				if(mapping_H_I[hidden_neuron][input_index] == null || mapping_H_I[hidden_neuron][input_index] == 0)
-					mapping_H_I[hidden_neuron][input_index] = val;
+				if(mapping_H_I[hidden_index][input_index] == null || mapping_H_I[hidden_index][input_index] == 0)
+					mapping_H_I[hidden_index][input_index] = val;
 				
 				//hidden ->  output connections mapping
-				if(mapping_H_O[hidden_neuron][output_index] == null || mapping_H_O[hidden_neuron][output_index] == 0)
-					mapping_H_O[hidden_neuron][output_index] = val;
+				if(mapping_H_O[hidden_index][output_index] == null || mapping_H_O[hidden_index][output_index] == 0)
+					mapping_H_O[hidden_index][output_index] = val;
 			}
 		}
 		

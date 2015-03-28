@@ -18,7 +18,7 @@ public interface Const {
 	//NEURON
 	public static final int 		INPUTS 			= 8;
 	public static final int 		OUPUTS 			= 4;
-	public static final int 		HIDDEN 			= 1; //2 * INPUTS + 1;
+	public static final int 		HIDDEN 			= 2 * INPUTS + 1;
 	
 	//TRAINING
 	public static final Activation	AFUNC 			= Activation.TANH;
