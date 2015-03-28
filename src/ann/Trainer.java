@@ -3,9 +3,10 @@ package ann;
 import java.util.ArrayList;
 import java.util.Random;
 
+import utils.Const;
+import utils.Const.Activation;
+import utils.Const.EvalType;
 import dataset.DataGen;
-import ann.Const.Activation;
-import ann.Const.EvalType;;
 
 /**
  * Artificial neural network
@@ -107,12 +108,8 @@ public class Trainer
 	{	
 		//first random weights
 		WeightsGen();
-				
-		int sets = 4;
-		int min = 0;
-		boolean binary = true;
 		
-		DataGen datagen = new DataGen(length_I, sets, min, binary);
+		DataGen datagen = new DataGen(length_I, Const.SETS, Const.MIN, Const.BINARY);
 		if(Const.DEBUG)
 			datagen.PrintDataSet();
 		
@@ -138,10 +135,10 @@ public class Trainer
 					
 					ann = ann_last;
 					
-					FeedForward(dataset,0);
-					FeedForward(dataset,1);
-					FeedForward(dataset,2);
-					FeedForward(dataset,3);
+					for (int j = 0, max = dataset.length; j < max; j++) {
+						FeedForward(dataset,j);
+					}
+					
 					break;
 				}
 				else if (i != 0)
@@ -170,13 +167,13 @@ public class Trainer
 				double current_error = 0;
 				for (int k = 0; k < length_O ; k++)
 				{
-					current_error = ExpectedValue_XOR(0) - ann.neurons_O[k];
+					current_error = ExpectedValue_PacMan(k) - ann.neurons_O[k];
 					error += Math.pow(current_error,2);
+					
+					System.out.println("________________________________________________________EXPECTED_____" + ExpectedValue_PacMan(k));
+					System.out.println("__________________________________________________________NEURON_____" + ann.neurons_O[k]);
+					System.out.println("");
 				}				
-				
-				System.out.println("________________________________________________________EXPECTED_____" + ExpectedValue_XOR(0));
-				System.out.println("__________________________________________________________NEURON_____" + ann.neurons_O[0]);
-				System.out.println("");
 			}
 			error /= dataset.length;
 			eval_error += Math.pow(error,2);
@@ -189,10 +186,9 @@ public class Trainer
 				System.out.println("VICTORYYYYYYYY");
 				System.out.println("FINISHED IN ITERATION:__  " + i);
 				
-				FeedForward(dataset,0);
-				FeedForward(dataset,1);
-				FeedForward(dataset,2);
-				FeedForward(dataset,3);
+				for (int j = 0, max = dataset.length; j < max; j++) {
+					FeedForward(dataset,j);
+				}
 				break;
 			}
 			
@@ -201,10 +197,9 @@ public class Trainer
 		
 		if(Const.ETYPE == EvalType.EARLY_STOP)
 		{
-			FeedForward(dataset,0);
-			FeedForward(dataset,1);
-			FeedForward(dataset,2);
-			FeedForward(dataset,3);
+			for (int j = 0, max = dataset.length; j < max; j++) {
+				FeedForward(dataset,j);
+			}
 		}
 		
 		System.out.println("END");
@@ -317,11 +312,11 @@ public class Trainer
 		for (int i = 0; i < length_O ; i++)
 		{
 			if(Const.AFUNC == Activation.TANH)
-				errors_O[i] = (1 - Math.pow(ann.neurons_O[i], 2)) * (ExpectedValue_XOR(i) - ann.neurons_O[i]);
+				errors_O[i] = (1 - Math.pow(ann.neurons_O[i], 2)) * (ExpectedValue_PacMan(i) - ann.neurons_O[i]);
 			else if(Const.AFUNC == Activation.SIGMOID)
-				errors_O[i] = ann.neurons_O[i] * (1 - ann.neurons_O[i]) * (ExpectedValue_XOR(i) - ann.neurons_O[i]);
+				errors_O[i] = ann.neurons_O[i] * (1 - ann.neurons_O[i]) * (ExpectedValue_PacMan(i) - ann.neurons_O[i]);
 			else if(Const.AFUNC == Activation.UMBRAL)
-				errors_O[i] = 1 * (ExpectedValue_XOR(i) - ann.neurons_O[i]);
+				errors_O[i] = 1 * (ExpectedValue_PacMan(i) - ann.neurons_O[i]);
 			
 			if(Const.DEBUG)
 				System.out.println("output error_ " + i + "____" + errors_O[i]);
@@ -458,6 +453,31 @@ public class Trainer
 					System.out.println("EXPECTED___" + 0);
 				return 0;
 			}
+			default:
+				//?????????
+				return 999999;
+		}
+	}
+	
+	//XOR
+	private double ExpectedValue_PacMan(int output)
+	{
+		/*
+		 * E = ( 1 - D ) ( 1 - 2 T );
+		 * Donde E es la estrategia resultante( 1 -> huir del fantasma; -1 -> ir a por el fantasma )
+		 * D es la distancia al fantasma en un rango de 0 a 1
+		 * T es el tiempo que le queda de ser comestible en un rango de 0 a 1 
+		 */
+		switch (output)
+		{
+			case 0:
+				return (1 - ann.neurons_I[0]) * (1 - 2 * Math.sqrt(ann.neurons_I[4]));
+			case 1:
+				return (1 - ann.neurons_I[1]) * (1 - 2 * Math.sqrt(ann.neurons_I[5]));
+			case 2:
+				return (1 - ann.neurons_I[2]) * (1 - 2 * Math.sqrt(ann.neurons_I[6]));
+			case 3:
+				return (1 - ann.neurons_I[3]) * (1 - 2 * Math.sqrt(ann.neurons_I[7]));
 			default:
 				//?????????
 				return 999999;

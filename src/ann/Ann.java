@@ -1,6 +1,6 @@
 package ann;
 
-import java.util.ArrayList;
+import utils.Const;
 
 public class Ann
 {
@@ -22,9 +22,9 @@ public class Ann
 	public double[] 	neurons_H;			//hidden values
 	public double[] 	neurons_O;			//output values
 	
-	public Ann(ArrayList <Byte> genotype, final int inputs, final int outputs)
+	public Ann(byte[] genotype, final int inputs, final int outputs)
 	{
-		final int gen_size = genotype.size();				//store the genontype size
+		final int gen_size = genotype.length;				//store the genontype size
 		final int blocks_length = inputs * outputs;			//length of the blocks of the genotype
 		final int hidden = gen_size / blocks_length - 1;	// -1 because of the i_o
 		
@@ -49,11 +49,11 @@ public class Ann
 		WeightMapping(genotype, gen_size, blocks_length, inputs, hidden, outputs);
 	}
 	
-	private void WeightMapping(ArrayList<Byte> genotype, final int gen_size, final int blocks_length,final int inputs, final int hidden, final int outputs)
+	private void WeightMapping(byte[] genotype, final int gen_size, final int blocks_length,final int inputs, final int hidden, final int outputs)
 	{
 		for (int i = 0; i < gen_size; i++)
 		{
-			Byte val = genotype.get(i);
+			Byte val = genotype[i];
 			
 			//input ->  output connections mapping
 			if(i < blocks_length)
@@ -74,7 +74,9 @@ public class Ann
 			else 
 			{
 				int hidden_neuron = 0;
+				int input_index = 0;
 				int substraction = i - blocks_length;
+				int substraction_i = i - blocks_length;
 				
 				while(substraction >= blocks_length)
 				{
@@ -82,16 +84,15 @@ public class Ann
 					substraction -= blocks_length;
 				}				
 				
-				int input_index, output_index;
-
-				
-				if(inputs - 1 == 0)
-					input_index = 0;
-				else
-					input_index = substraction / (inputs - 1);
+				/////
+				while(substraction_i >= outputs)
+				{
+					input_index++;
+					substraction_i -= outputs;
+				}
+				int output_index;
 
 				output_index = substraction % (outputs);
-
 				
 				//input ->  hidden connections mapping
 				if(mapping_H_I[hidden_neuron][input_index] == null || mapping_H_I[hidden_neuron][input_index] == 0)

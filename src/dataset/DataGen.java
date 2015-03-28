@@ -37,6 +37,7 @@ public class DataGen
 			}
 		}	
 		
+		/*
 		dataset[0][0] = 0;
 		dataset[0][1] = 0;
 		
@@ -48,7 +49,7 @@ public class DataGen
 		
 		dataset[3][0] = 1;
 		dataset[3][1] = 1;
-		
+		*/
 		return dataset;
 	}
 	
