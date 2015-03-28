@@ -6,6 +6,7 @@ import java.util.Random;
 import utils.Const;
 import utils.Const.Activation;
 import utils.Const.EvalType;
+import utils.Const.Purpose;
 import dataset.DataGen;
 
 /**
@@ -167,10 +168,10 @@ public class Trainer
 				double current_error = 0;
 				for (int k = 0; k < length_O ; k++)
 				{
-					current_error = ExpectedValue_PacMan(k) - ann.neurons_O[k];
+					current_error = ExpectedValue(k) - ann.neurons_O[k];
 					error += Math.pow(current_error,2);
 					
-					System.out.println("________________________________________________________EXPECTED_____" + ExpectedValue_PacMan(k));
+					System.out.println("________________________________________________________EXPECTED_____" + ExpectedValue(k));
 					System.out.println("__________________________________________________________NEURON_____" + ann.neurons_O[k]);
 					System.out.println("");
 				}				
@@ -312,11 +313,11 @@ public class Trainer
 		for (int i = 0; i < length_O ; i++)
 		{
 			if(Const.AFUNC == Activation.TANH)
-				errors_O[i] = (1 - Math.pow(ann.neurons_O[i], 2)) * (ExpectedValue_PacMan(i) - ann.neurons_O[i]);
+				errors_O[i] = (1 - Math.pow(ann.neurons_O[i], 2)) * (ExpectedValue(i) - ann.neurons_O[i]);
 			else if(Const.AFUNC == Activation.SIGMOID)
-				errors_O[i] = ann.neurons_O[i] * (1 - ann.neurons_O[i]) * (ExpectedValue_PacMan(i) - ann.neurons_O[i]);
+				errors_O[i] = ann.neurons_O[i] * (1 - ann.neurons_O[i]) * (ExpectedValue(i) - ann.neurons_O[i]);
 			else if(Const.AFUNC == Activation.UMBRAL)
-				errors_O[i] = 1 * (ExpectedValue_PacMan(i) - ann.neurons_O[i]);
+				errors_O[i] = 1 * (ExpectedValue(i) - ann.neurons_O[i]);
 			
 			if(Const.DEBUG)
 				System.out.println("output error_ " + i + "____" + errors_O[i]);
@@ -434,6 +435,16 @@ public class Trainer
 			System.out.println("WEIGHTS CORRECTED");
 	}
 	
+	private double ExpectedValue(int output)
+	{
+		if(Const.PURPOSE == Purpose.XOR)
+			return ExpectedValue_XOR(output);
+		else if(Const.PURPOSE == Purpose.PACMAN)
+			return ExpectedValue_PacMan(output);
+		
+		return Integer.MAX_VALUE;
+	}
+	
 	//XOR
 	private int ExpectedValue_XOR(int output)
 	{
@@ -459,7 +470,7 @@ public class Trainer
 		}
 	}
 	
-	//XOR
+	//PACMAN
 	private double ExpectedValue_PacMan(int output)
 	{
 		/*

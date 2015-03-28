@@ -12,12 +12,17 @@ public interface Const {
 	    EARLY_STOP
 	}
 	
+	public enum Purpose {
+	    XOR,
+	    PACMAN
+	}
+	
 	//DEBUG
 	public static final boolean		DEBUG 			= true;
 	
 	//NEURON
 	public static final int 		INPUTS 			= 8;
-	public static final int 		HIDDEN 			= 2 * INPUTS + 1;
+	public static final int 		HIDDEN 			= 2*INPUTS + 1;
 	public static final int 		OUPUTS 			= 4;
 	
 	//TRAINING
@@ -34,4 +39,7 @@ public interface Const {
 	public static final int 		MIN 			= 0;
 	public static final int 		SETS 			= 1;	//1 set is online training
 	public static final boolean 	BINARY 			= false;
+	
+	//PURPOSE
+	public static final Purpose		PURPOSE 		= Purpose.PACMAN;
 }

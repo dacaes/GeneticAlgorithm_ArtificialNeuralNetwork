@@ -25,14 +25,15 @@ public class Main
 	
 	private static byte[] SetGenotype()
 	{
-		byte[] genotype = new byte[18];
+		byte[] genotype = new byte[4];
 		
 		for (int i = 0; i < 4; i++) {
 			genotype[i] = (byte) 1;
 		}
 		
 		//i3 h2 o2
-		
+		/*
+		byte[] genotype = new byte[18];
 		genotype[0] = (byte) 1;
 		genotype[1] = (byte) 0;
 		genotype[2] = (byte) 1;
@@ -53,7 +54,7 @@ public class Main
 		genotype[15] = (byte) 0;
 		genotype[16] = (byte) 0;
 		genotype[17] = (byte) 1;
-		
+		*/
 		/*
 		genotype[0] = (byte) 1;
 		genotype[1] = (byte) 0;
