@@ -1,13 +1,11 @@
 package ann;
 
-import java.util.ArrayList;
 import java.util.Random;
 
-import utils.Const;
-import utils.Const.Activation;
-import utils.Const.EvalType;
-import utils.Const.Purpose;
-import dataset.DataGen;
+import ann_ga.utils.Const;
+import ann_ga.utils.Const.Activation;
+import ann_ga.utils.Const.EvalType;
+import ann_ga.utils.Const.Purpose;
 
 /**
  * Artificial neural network
@@ -120,6 +118,7 @@ public class Trainer
 		double eval_error = 0;
 		for(int i = 0 ; i < training_iterations ; i++)
 		{
+			datagen = new DataGen(length_I, Const.SETS, Const.MIN, Const.BINARY);
 			System.out.println("____________________________ITERATION___"  + (i + 1) + " of "+ training_iterations);
 			
 			if(Const.DEBUG)

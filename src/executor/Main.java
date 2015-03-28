@@ -1,9 +1,9 @@
 package executor;
 
 import ga.Genotype;
-import utils.Const;
 import ann.Ann;
 import ann.Trainer;
+import ann_ga.utils.Const;
 
 /**
  * Main class. The executor.

@@ -1,4 +1,4 @@
-package utils;
+package ann_ga.utils;
 
 public interface Const {
 	public enum Activation {

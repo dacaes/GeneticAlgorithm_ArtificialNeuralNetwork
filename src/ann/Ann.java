@@ -1,6 +1,6 @@
 package ann;
 
-import utils.Const;
+import ann_ga.utils.Const;
 
 public class Ann
 {
